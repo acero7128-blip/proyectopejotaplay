@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="game-header">
+    <a href="{{ url_for('dashboard') }}" class="btn-back">← Volver al Panel</a>
+    <h2>Juego Premium 4: Álgebra y Ecuaciones</h2>
+    <span class="badge pending">Zona Exclusiva Suscriptores</span>
+</div>
+<div class="card game-container">
+    <p class="game-desc">Resuelve ecuaciones de primer y segundo grado paso a paso para desbloquear niveles avanzados.</p>
+    <div class="stats">
+        <div>Puntuación: <strong id="score">0</strong></div>
+        <div>Racha: <strong id="streak">0</strong></div>
+    </div>
+    <div id="question-box" class="question">¿Cuánto vale x en: 2x + 4 = 12?</div>
+    <div class="game-controls">
+        <input type="number" id="answer-input" placeholder="Valor de x...">
+        <button id="submit-btn" class="btn-primary">Comprobar</button>
+    </div>
+    <button id="start-btn" class="btn-secondary">Siguiente Ecuación</button>
+    <p id="feedback" class="feedback"></p>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const qBox = document.getElementById("question-box");
+    const input = document.getElementById("answer-input");
+    const subBtn = document.getElementById("submit-btn");
+    const startBtn = document.getElementById("start-btn");
+    const scoreDisp = document.getElementById("score");
+    const feedback = document.getElementById("feedback");
+
+    let ans = 4;
+    let score = 0;
+
+    subBtn.addEventListener("click", () => {
+        if(parseInt(input.value) === ans) {
+            score += 15;
+            feedback.textContent = "¡Correcto! Ecuación resuelta.";
+            feedback.style.color = "#16a34a";
+        } else {
+            feedback.textContent = `Incorrecto. El valor era ${ans}.`;
+            feedback.style.color = "#dc2626";
+        }
+        scoreDisp.textContent = score;
+        input.value = "";
+    });
+    startBtn.addEventListener("click", () => {
+        let a = Math.floor(Math.random() * 5) + 2;
+        let b = Math.floor(Math.random() * 10) + 1;
+        ans = Math.floor(Math.random() * 10) + 1;
+        let c = (a * ans) + b;
+        qBox.textContent = `¿Cuánto vale x en: ${a}x + ${b} = ${c}?`;
+        feedback.textContent = "";
+    });
+});
+</script>
+{% endblock %}

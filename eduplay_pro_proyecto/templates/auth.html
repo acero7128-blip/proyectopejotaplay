@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="auth-grid">
+    <div class="card">
+        <h2>Iniciar Sesión</h2>
+        <p class="subtitle">Ingresa con tus credenciales registradas.</p>
+        <form method="POST">
+            <input type="hidden" name="action" value="login">
+            <label>Correo Electrónico</label>
+            <input type="text" name="email" required placeholder="estudiante@correo.com (o admin)">
+            <label>Contraseña</label>
+            <input type="password" name="password" required placeholder="••••••••">
+            <button type="submit" class="btn-primary full-width">Entrar a la Plataforma</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Registro de Usuario</h2>
+        <p class="subtitle">Crea tu cuenta para gestionar tu suscripción.</p>
+        <form method="POST">
+            <input type="hidden" name="action" value="register">
+            <label>Nombre Completo / Usuario</label>
+            <input type="text" name="username" required placeholder="Ej. Pablo Acero">
+            <label>Correo Electrónico</label>
+            <input type="text" name="email" required placeholder="estudiante@correo.com (o admin)">
+            <label>Contraseña</label>
+            <input type="password" name="password" required placeholder="Crea una contraseña segura">
+            <button type="submit" class="btn-secondary full-width">Crear Cuenta</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

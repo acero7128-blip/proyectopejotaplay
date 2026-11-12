@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="game-header">
+    <a href="{{ url_for('dashboard') }}" class="btn-back">← Volver al Panel</a>
+    <h2>Juego Premium 5: Historia y Próceres de Venezuela</h2>
+    <span class="badge pending">Zona Exclusiva Suscriptores</span>
+</div>
+<div class="card game-container">
+    <p class="game-desc">Trivia avanzada sobre hechos históricos fundamentales, batallas y héroes patrios.</p>
+    <div class="stats">
+        <div>Puntuación: <strong id="score">0</strong></div>
+        <div>Pregunta: <strong id="progress">1 / 5</strong></div>
+    </div>
+    <div id="question-box" class="question">¿En qué año se libró la Batalla de Carabobo?</div>
+    <div id="options-box" class="options-grid">
+        <button class="option-btn" onclick="checkH('1821')">1821</button>
+        <button class="option-btn" onclick="checkH('1810')">1810</button>
+        <button class="option-btn" onclick="checkH('1830')">1830</button>
+        <button class="option-btn" onclick="checkH('1819')">1819</button>
+    </div>
+    <p id="feedback" class="feedback"></p>
+</div>
+<script>
+let score = 0;
+function checkH(val) {
+    const fb = document.getElementById("feedback");
+    if(val === '1821') {
+        score += 20;
+        fb.textContent = "¡Excelente! Victoria patriota.";
+        fb.style.color = "#16a34a";
+    } else {
+        fb.textContent = "Incorrecto. Fue en 1821.";
+        fb.style.color = "#dc2626";
+    }
+    document.getElementById("score").textContent = score;
+}
+</script>
+{% endblock %}

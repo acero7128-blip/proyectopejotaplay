@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="game-header">
+    <a href="{{ url_for('dashboard') }}" class="btn-back">← Volver al Panel</a>
+    <h2>Juego Gratuito 1: Matemática Básica</h2>
+    <span class="badge active">Acceso Libre Registrado</span>
+</div>
+<div class="card game-container">
+    <p class="game-desc">Desafíos numéricos de agilidad mental (sumas, restas, multiplicaciones y divisiones).</p>
+    <div class="stats">
+        <div>Aciertos: <strong id="score">0</strong></div>
+        <div>Racha: <strong id="streak">0</strong></div>
+    </div>
+    <div id="question-box" class="question">Presiona Iniciar para comenzar</div>
+    <div class="game-controls">
+        <input type="number" id="answer-input" placeholder="Resultado..." disabled>
+        <button id="submit-btn" class="btn-primary" disabled>Comprobar</button>
+    </div>
+    <button id="start-btn" class="btn-secondary">Iniciar / Nuevo Juego</button>
+    <p id="feedback" class="feedback"></p>
+</div>
+<script src="{{ url_for('static', filename='js/math_game.js') }}"></script>
+{% endblock %}

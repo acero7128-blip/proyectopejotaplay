@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+    <h1>Aprende Jugando con EduPlay Venezuela</h1>
+    <p>Plataforma interactiva con <strong>3 juegos gratuitos</strong> para todos los usuarios registrados y <strong>3 juegos premium</strong> exclusivos bajo suscripción mensual.</p>
+
+    <h2 style="margin-top: 2rem; color: var(--primary);">🎮 3 Juegos Gratuitos (Acceso libre al registrarse)</h2>
+    <div class="games-preview">
+        <a href="{{ url_for('game_free_math') }}" class="preview-card clickable-card">
+            <span class="icon">🧮</span>
+            <h3>1. Matemática Básica</h3>
+            <p>Desafíos numéricos de agilidad mental.</p>
+        </a>
+        <a href="{{ url_for('game_free_spelling') }}" class="preview-card clickable-card">
+            <span class="icon">✍️</span>
+            <h3>2. Ortografía</h3>
+            <p>Completar palabras, tildes y reglas ortográficas.</p>
+        </a>
+        <a href="{{ url_for('game_free_geography') }}" class="preview-card clickable-card">
+            <span class="icon">🇻🇪</span>
+            <h3>3. Geografía de Venezuela</h3>
+            <p>Trivias sobre estados, capitales y relieves.</p>
+        </a>
+    </div>
+
+    <h2 style="margin-top: 3rem; color: var(--warning);">⭐ 3 Juegos Premium (Exclusivos para Suscriptores - Total 6)</h2>
+    <div class="games-preview">
+        <a href="{{ url_for('game_premium_algebra') }}" class="preview-card clickable-card premium-border">
+            <span class="icon">📐</span>
+            <h3>4. Álgebra Avanzada</h3>
+            <p>Ecuaciones y resolución paso a paso.</p>
+        </a>
+        <a href="{{ url_for('game_premium_history') }}" class="preview-card clickable-card premium-border">
+            <span class="icon">📜</span>
+            <h3>5. Historia de Venezuela</h3>
+            <p>Batallas, héroes y hechos patrios.</p>
+        </a>
+        <a href="{{ url_for('game_premium_science') }}" class="preview-card clickable-card premium-border">
+            <span class="icon">🔬</span>
+            <h3>6. Ciencias Naturales</h3>
+            <p>Biología celular y ecosistemas.</p>
+        </a>
+    </div>
+
+    <div class="pricing-card" style="margin-top: 3rem;">
+        <h3>Suscripción Mensual Premium</h3>
+        <div class="price">$5 USD <span>/ mes</span></div>
+        <p class="bcv-note">Pagaderos en Bolívares a la Tasa Oficial del BCV del día</p>
+        <ul>
+            <li>Desbloquea los 3 juegos premium adicionales (6 juegos en total)</li>
+            <li>Activación mediante reporte de pago manual</li>
+            <li>Cancela tu suscripción en cualquier momento</li>
+        </ul>
+        <a href="{{ url_for('dashboard') if user else url_for('auth') }}" class="btn-primary">
+            {{ 'Ir a mi Panel' if user else 'Registrarse Gratis' }}
+        </a>
+    </div>
+</section>
+{% endblock +%}

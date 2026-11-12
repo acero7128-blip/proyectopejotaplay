@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width: 450px; margin: 3rem auto;">
+    <h2>Acceso Administrador</h2>
+    <p class="subtitle">Gestiona el estatus de suscripción de los clientes.</p>
+    <form method="POST">
+        <label>Usuario Administrador</label>
+        <input type="text" name="username" required placeholder="admin">
+        <label>Contraseña</label>
+        <input type="password" name="password" required placeholder="admin123">
+        <button type="submit" class="btn-primary full-width">Entrar como Administrador</button>
+    </form>
+    <p style="margin-top: 1rem; text-align: center;"><small>Credenciales por defecto: <strong>admin</strong> / <strong>admin123</strong></small></p>
+</div>
+{% endblock %}

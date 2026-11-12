@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="game-header">
+    <a href="{{ url_for('dashboard') }}" class="btn-back">← Volver al Panel</a>
+    <h2>Juego Premium 6: Ciencias Naturales y Biología</h2>
+    <span class="badge pending">Zona Exclusiva Suscriptores</span>
+</div>
+<div class="card game-container">
+    <p class="game-desc">Desafíos de biología celular, ecosistemas de Venezuela y leyes físicas fundamentales.</p>
+    <div class="stats">
+        <div>Puntuación: <strong id="score">0</strong></div>
+    </div>
+    <div id="question-box" class="question">¿Cuál es la unidad básica y funcional de todo ser vivo?</div>
+    <div id="options-box" class="options-grid">
+        <button class="option-btn" onclick="checkS('Célula')">La Célula</button>
+        <button class="option-btn" onclick="checkS('Átomo')">El Átomo</button>
+        <button class="option-btn" onclick="checkS('Tejido')">El Tejido</button>
+    </div>
+    <p id="feedback" class="feedback"></p>
+</div>
+<script>
+let score = 0;
+function checkS(val) {
+    const fb = document.getElementById("feedback");
+    if(val === 'Célula') {
+        score += 20;
+        fb.textContent = "¡Correcto! Es la célula.";
+        fb.style.color = "#16a34a";
+    } else {
+        fb.textContent = "Incorrecto. Es la célula.";
+        fb.style.color = "#dc2626";
+    }
+    document.getElementById("score").textContent = score;
+}
+</script>
+{% endblock %}

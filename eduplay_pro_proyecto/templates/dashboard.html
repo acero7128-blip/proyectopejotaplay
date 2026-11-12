@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card dashboard-card">
+    <div class="profile-header">
+        <div>
+            <h2>Perfil de Usuario: {{ user.username }}</h2>
+            <p><strong>Correo:</strong> {{ user.email }}</p>
+        </div>
+        <div class="status-badge-container">
+            <span>Suscripción:</span>
+            {% if user.sub_status == 'active' %}
+                <span class="badge active">PREMIUM ACTIVO (6 Juegos)</span>
+            {% elif user.sub_status == 'pending' %}
+                <span class="badge pending">PENDIENTE</span>
+            {% elif user.sub_status == 'cancelled' %}
+                <span class="badge cancelled">CANCELADO (3 Juegos Libres)</span>
+            {% else %}
+                <span class="badge inactive">GRATUITO (3 Juegos Libres)</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Sección de Juegos Gratuitos (Siempre Disponibles para Registrados) -->
+    <h3>🎮 Módulos Gratuitos (Disponibles para ti)</h3>
+    <div class="games-grid" style="margin-bottom: 2rem;">
+        <div class="game-card-item">
+            <h4>1. Matemática Básica</h4>
+            <p>Agilidad mental numérica.</p>
+            <a href="{{ url_for('game_free_math') }}" class="btn-primary">Jugar Gratis</a>
+        </div>
+        <div class="game-card-item">
+            <h4>2. Ortografía</h4>
+            <p>Reglas y acentuación.</p>
+            <a href="{{ url_for('game_free_spelling') }}" class="btn-primary">Jugar Gratis</a>
+        </div>
+        <div class="game-card-item">
+            <h4>3. Geografía de Venezuela</h4>
+            <p>Estados y capitales.</p>
+            <a href="{{ url_for('game_free_geography') }}" class="btn-primary">Jugar Gratis</a>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Sección de Juegos Premium -->
+    <h3>⭐ Módulos Premium (3 Juegos Adicionales - Total 6)</h3>
+    {% if user.sub_status == 'active' %}
+        <div class="active-panel">
+            <p class="valid-until">Suscripción Premium válida hasta: <strong>{{ user.sub_end_date }}</strong></p>
+            <div class="games-grid">
+                <div class="game-card-item premium-box">
+                    <h4>4. Álgebra Avanzada</h4>
+                    <p>Ecuaciones y despejes.</p>
+                    <a href="{{ url_for('game_premium_algebra') }}" class="btn-secondary">Jugar Premium</a>
+                </div>
+                <div class="game-card-item premium-box">
+                    <h4>5. Historia de Venezuela</h4>
+                    <p>Héroes y batallas.</p>
+                    <a href="{{ url_for('game_premium_history') }}" class="btn-secondary">Jugar Premium</a>
+                </div>
+                <div class="game-card-item premium-box">
+                    <h4>6. Ciencias Naturales</h4>
+                    <p>Biología y física.</p>
+                    <a href="{{ url_for('game_premium_science') }}" class="btn-secondary">Jugar Premium</a>
+                </div>
+            </div>
+
+            <div class="cancel-section">
+                <form action="{{ url_for('cancel_subscription') }}" method="POST" onsubmit="return confirm('¿Deseas cancelar tu suscripción? Seguirás teniendo acceso a los 3 juegos gratuitos.');">
+                    <button type="submit" class="btn-danger">Cancelar Suscripción Premium</button>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <div class="payment-panel">
+            <div class="locked-banner">
+                🔒 Los 3 juegos premium adicionales están bloqueados. ¡Suscríbete por $5 USD mensuales para desbloquear los 6 juegos en total!
+            </div>
+            
+            {% if user.sub_status == 'pending' %}
+                <p class="alert-info">Tu pago está en revisión por el profesor. Envía tu soporte a <strong>angelcontrerasoficial@gmail.com</strong> o WhatsApp <strong>+58 04168029177</strong>.</p>
+                
+            {% else %}
+                <h3>Instrucciones de Pago Premium ($5 USD / Tasa BCV)</h3>
+                <p>Envía tu soporte de pago a los canales autorizados:</p>
+                <ul class="contact-list">
+                    <li><strong>Correo:</strong> angelcontrerasoficial@gmail.com</li>
+                    <li><strong>WhatsApp:</strong> +58 04168029177</li>
+                </ul>
+                <form action="{{ url_for('submit_payment') }}" method="POST" class="payment-form">
+                    <label>Número de Referencia del Pago:</label>
+                    <input type="text" name="reference" required placeholder="Ej. Ref-123456">
+                    <button type="submit" class="btn-primary">Reportar Pago Premium</button>
+                </form>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if payments %}
+        <hr class="divider">
+        <h3>Historial de Pagos</h3>
+        <table class="payments-table">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Monto</th>
+                    <th>Referencia</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in payments %}
+                <tr>
+                    <td>{{ p.payment_date }}</td>
+                    <td>${{ "%.2f"|format(p.amount_usd) }} USD</td>
+                    <td>{{ p.reference_code }}</td>
+                    <td><span class="badge {{ 'active' if p.status == 'verified' else 'pending' }}">{{ p.status | upper }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+{% endblock %}

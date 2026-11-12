@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <h2>Panel de Administrador - Gestión de Clientes</h2>
+        <a href="{{ url_for('admin_logout') }}" class="btn-danger" style="padding: 0.5rem 1rem;">Cerrar Sesión Admin</a>
+    </div>
+    <p>Aquí puedes visualizar a todos los usuarios registrados, revisar los que se encuentran en estatus <strong>PENDIENTE</strong> tras reportar su pago, y cambiar su estatus a <strong>ACTIVO</strong>.</p>
+
+    <hr class="divider">
+
+    <div style="overflow-x: auto;">
+        <table class="payments-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Correo</th>
+                    <th>Estatus Actual</th>
+                    <th>Vencimiento</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <td>{{ u.id }}</td>
+                    <td><strong>{{ u.username }}</strong></td>
+                    <td>{{ u.email }}</td>
+                    <td>
+                        <span class="badge {{ u.sub_status }}">
+                            {{ u.sub_status | upper }}
+                        </span>
+                    </td>
+                    <td>{{ u.sub_end_date if u.sub_end_date else 'N/A' }}</td>
+                    <td>
+                        {% if u.sub_status != 'active' %}
+                            <a href="{{ url_for('admin_set_active', user_id=u.id) }}" class="btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">
+                                Cambiar a ACTIVO
+                            </a>
+                        {% else %}
+                            <span style="color: #16a34a; font-weight: 600;">✓ Activo</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

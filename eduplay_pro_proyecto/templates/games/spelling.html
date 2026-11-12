@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="game-header">
+    <a href="{{ url_for('dashboard') }}" class="btn-back">← Volver al Panel</a>
+    <h2>Módulo 2: Ortografía</h2>
+    <span class="badge active">Suscripción Activa</span>
+</div>
+
+<div class="card game-container">
+    <p class="game-desc">Selecciona la opción ortográficamente correcta (uso de b/v, c/s/z y tildes).</p>
+    <div class="stats">
+        <div>Puntuación: <strong id="score">0</strong></div>
+        <div>Pregunta: <strong id="progress">0 / 0</strong></div>
+    </div>
+
+    <div id="question-box" class="question">Presiona Iniciar para cargar el ejercicio</div>
+    <div id="options-box" class="options-grid"></div>
+
+    <button id="start-btn" class="btn-secondary">Iniciar / Reiniciar Ortografía</button>
+    <p id="feedback" class="feedback"></p>
+</div>
+
+<script src="{{ url_for('static', filename='js/spelling_game.js') }}"></script>
+{% endblock %}
